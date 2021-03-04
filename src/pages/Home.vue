@@ -8,7 +8,7 @@
         <h1>Bem-vindo, João</h1>
       </div>
       <div class="actions">
-        <md-button to="/register" class="md-raised">Cadastrar</md-button>
+        <md-button class="md-raised">Cadastrar</md-button>
         <md-button class="md-raised">Consultar</md-button>
       </div>
     </aside>

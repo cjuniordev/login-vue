@@ -16,7 +16,13 @@
         <label>Digite sua senha</label>
         <md-input v-model="password" type="password"></md-input>
     </md-field>  
-    <md-button to="/" class="md-raised button" type="button">Entrar</md-button>
+    <md-button
+        class="md-raised button"
+        type="button"
+        v-on:click="handleLogin(initial, password)"
+    >
+    Entrar
+    </md-button>
     <div class="links">
         <router-link to="/help">Esqueci minha senha</router-link>
         <p>
@@ -28,8 +34,17 @@
 </template>
 
 <script>
+import login from '@/services/login';
   export default {
     name: 'FormLogin',
+    methods: {
+        handleLogin: async (name, pwd) => {
+            const response = await login(name, pwd);
+            if(response.sucess){
+                window.localStorage.setItem('token', response.token);
+            }
+        }
+    }
   }
 </script>
 
