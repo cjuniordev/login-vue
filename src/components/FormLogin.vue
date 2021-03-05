@@ -35,17 +35,19 @@
 
 <script>
 import login from '@/services/login';
-  export default {
-    name: 'FormLogin',
-    methods: {
-        handleLogin: async (name, pwd) => {
-            const response = await login(name, pwd);
-            if(response.sucess){
-                window.localStorage.setItem('token', response.token);
-            }
+
+export default {
+name: 'FormLogin',
+methods: {  
+    handleLogin: async function(name, pwd) {
+        const response = await login(name, pwd);
+        if(response.sucess){
+            window.localStorage.setItem('token', response.token);
+            this.$router.push('/');
         }
     }
-  }
+}
+}
 </script>
 
 <style>

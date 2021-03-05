@@ -16,8 +16,21 @@
 </template>
 
 <script>
+import authorization from '@/services/authorization';
+
 export default {
   name: 'Home',
+  methods: {
+    loadAuthorization: async function() {
+      const token = window.localStorage.getItem('token');
+      const auth = await authorization(token);
+
+      console.log(auth);
+    }
+  },
+  beforeMount(){
+    this.loadAuthorization();
+  }
 }
 </script>
 
