@@ -16,20 +16,52 @@
 </template>
 
 <script>
-import authorization from '@/services/authorization';
+import api from '@/services/api';
 
 export default {
   name: 'Home',
-  methods: {
-    loadAuthorization: async function() {
-      const token = window.localStorage.getItem('token');
-      const auth = await authorization(token);
-
-      console.log(auth);
+  data: function (){
+    return{
+      authorization: false,
     }
   },
-  beforeMount(){
-    this.loadAuthorization();
+  methods: {
+    getAuthorization: async function() {
+      try{
+        const token = window.localStorage.getItem('token');
+        const formattedToken = `Bearer ${token}`;
+        api.get('/authorization', {
+          headers: {
+            Authorization: formattedToken
+          }
+        })
+        .then((response) => {
+          if(response.data.sucess){
+            this.authorization = true;
+            this.redirect();
+          } else{
+            this.authorization = false;
+          }
+        })
+        .catch((err) => {
+          return err;
+        })
+      } catch(err){
+          return err;
+      }
+    },
+    redirect: function(){
+      if(this.authorization){
+        console.log('autorizado');
+      } else{
+        console.log('nao autorizado');
+        this.$router.push('/login');
+      }
+
+    }
+  },
+  async beforeMount(){
+    this.getAuthorization();
   }
 }
 </script>
@@ -63,5 +95,5 @@ aside{
 
 .actions > *{
   margin: 0;
-} 
+}
 </style>
