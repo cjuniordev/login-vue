@@ -5,13 +5,16 @@
         <md-avatar>
           <img src="../assets/avatar.png" alt="Avatar">
         </md-avatar>
-        <h1>Bem-vindo, João</h1>
+        <h1>Bem-vindo</h1>
       </div>
       <div class="actions">
         <md-button class="md-raised">Cadastrar</md-button>
-        <md-button class="md-raised">Consultar</md-button>
+        <md-button class="md-raised" @click="handleUsers">Consultar</md-button>
       </div>
     </aside>
+    <main>
+      {{ users }}
+    </main>
   </div>
 </template>
 
@@ -20,9 +23,10 @@ import api from '@/services/api';
 
 export default {
   name: 'Home',
-  data: function (){
+  data: function(){
     return{
       authorization: false,
+      users: [],
     }
   },
   methods: {
@@ -54,6 +58,25 @@ export default {
       if(!this.authorization){
         this.$router.push('/login');
       }
+    },
+    getUsers: function(){
+      api.get('/users')
+        .then((response) => {
+          const { data } = response;
+          this.users = data;
+        })
+    },
+    handleUsers: function(){
+      this.getUsers();
+      let arrUsers = [];
+      this.users.forEach((item, i) => {
+        let user = new Object();
+        user.username = item.username;
+        user.email = item.email;
+        arrUsers.push(user);
+      });
+      console.log(arrUsers);
+      this.users = arrUsers;
     }
   },
   async beforeMount(){
