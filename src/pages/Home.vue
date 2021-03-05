@@ -51,13 +51,9 @@ export default {
       }
     },
     redirect: function(){
-      if(this.authorization){
-        console.log('autorizado');
-      } else{
-        console.log('nao autorizado');
+      if(!this.authorization){
         this.$router.push('/login');
       }
-
     }
   },
   async beforeMount(){
