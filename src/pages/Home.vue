@@ -13,24 +13,14 @@
       </div>
     </aside>
     <main >
-        <md-table class="table">
-          <md-table-row>
-            <md-table-head md-numeric>ID</md-table-head>
-            <md-table-head>Nome</md-table-head>
-            <md-table-head>Email</md-table-head>
-          </md-table-row>
-          <md-table-row v-for="user in users">
-            <md-table-cell md-numeric>{{ user.id }}</md-table-cell>
-            <md-table-cell>{{ user.username }}</md-table-cell>
-            <md-table-cell>{{ user.email }}</md-table-cell>
-          </md-table-row>
-        </md-table>
+      <Table v-bind:users="this.users" />
     </main>
   </div>
 </template>
 
 <script>
 import api from '@/services/api';
+import Table from '@/components/Table';
 
 export default {
   name: 'Home',
@@ -40,6 +30,9 @@ export default {
       users: null,
       data: null,
     }
+  },
+  components: {
+    Table,
   },
   methods: {
     getAuthorization: async function() {
