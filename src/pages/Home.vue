@@ -12,8 +12,19 @@
         <md-button class="md-raised" @click="handleUsers">Consultar</md-button>
       </div>
     </aside>
-    <main>
-      {{ users }}
+    <main >
+        <md-table class="table">
+          <md-table-row>
+            <md-table-head md-numeric>ID</md-table-head>
+            <md-table-head>Nome</md-table-head>
+            <md-table-head>Email</md-table-head>
+          </md-table-row>
+          <md-table-row v-for="user in users">
+            <md-table-cell md-numeric>{{ user.id }}</md-table-cell>
+            <md-table-cell>{{ user.username }}</md-table-cell>
+            <md-table-cell>{{ user.email }}</md-table-cell>
+          </md-table-row>
+        </md-table>
     </main>
   </div>
 </template>
@@ -26,7 +37,8 @@ export default {
   data: function(){
     return{
       authorization: false,
-      users: [],
+      users: null,
+      data: null,
     }
   },
   methods: {
@@ -42,16 +54,16 @@ export default {
         .then((response) => {
           if(response.data.sucess){
             this.authorization = true;
-            this.redirect();
           } else{
             this.authorization = false;
+            this.redirect();
           }
         })
         .catch((err) => {
-          return err;
+          console.log(err);
         })
       } catch(err){
-          return err;
+          this.authorization = false;
       }
     },
     redirect: function(){
@@ -63,14 +75,15 @@ export default {
       api.get('/users')
         .then((response) => {
           const { data } = response;
-          this.users = data;
+          this.data = data;
         })
     },
     handleUsers: function(){
       this.getUsers();
       let arrUsers = [];
-      this.users.forEach((item, i) => {
+      this.data.forEach((item, i) => {
         let user = new Object();
+        user.id = item.id;
         user.username = item.username;
         user.email = item.email;
         arrUsers.push(user);
@@ -114,5 +127,17 @@ aside{
 
 .actions > *{
   margin: 0;
+}
+
+main{
+  height: 100vh;
+  width: 100%;
+
+  background-color: #FAFAFA;
+}
+
+.table{
+  padding: 0 10px;
+  background-color: #FFFFFF;
 }
 </style>
