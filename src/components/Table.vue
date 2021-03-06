@@ -6,7 +6,7 @@
         <md-table-head>Nome</md-table-head>
         <md-table-head>Email</md-table-head>
       </md-table-row>
-      <md-table-row v-for="user in users">
+      <md-table-row v-for="user in users" v-bind:key="user.id">
         <md-table-cell md-numeric>{{ user.id }}</md-table-cell>
         <md-table-cell>{{ user.username }}</md-table-cell>
         <md-table-cell>{{ user.email }}</md-table-cell>

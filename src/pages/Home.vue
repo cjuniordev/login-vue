@@ -8,12 +8,12 @@
         <h1>Bem-vindo</h1>
       </div>
       <div class="actions">
-        <md-button class="md-raised">Cadastrar</md-button>
         <md-button class="md-raised" @click="handleUsers">Consultar</md-button>
       </div>
     </aside>
     <main >
       <Table v-bind:users="this.users" />
+      
     </main>
   </div>
 </template>
@@ -72,6 +72,7 @@ export default {
         })
     },
     handleUsers: function(){
+      this.getAuthorization();
       this.getUsers();
       let arrUsers = [];
       this.data.forEach((item, i) => {
