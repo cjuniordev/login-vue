@@ -15,7 +15,7 @@
     <md-field class="input">
         <label>Digite sua senha</label>
         <md-input v-model="password" type="password"></md-input>
-    </md-field>  
+    </md-field>
     <md-button
         class="md-raised button"
         type="button"
@@ -38,7 +38,7 @@ import login from '@/services/login';
 
 export default {
 name: 'FormLogin',
-methods: {  
+methods: {
     handleLogin: async function(name, pwd) {
         const response = await login(name, pwd);
         if(response.sucess){
@@ -82,7 +82,7 @@ form{
     margin-top: 30px;
 
     background: rgb(103,196,249);
-    background: linear-gradient(90deg, rgba(103,196,249,1) 25%, rgba(163,60,240,1) 75%); 
+    background: linear-gradient(90deg, rgba(103,196,249,1) 25%, rgba(163,60,240,1) 75%);
 }
 
 .links{
