@@ -13,20 +13,19 @@
     </aside>
     <main >
       <Table v-bind:users="this.users" />
-      
     </main>
   </div>
 </template>
 
 <script>
 import api from '@/services/api';
+import authenticate from '@/services/authenticate';
 import Table from '@/components/Table';
 
 export default {
   name: 'Home',
   data: function(){
     return{
-      authorization: false,
       users: null,
       data: null,
     }
@@ -35,32 +34,13 @@ export default {
     Table,
   },
   methods: {
-    getAuthorization: async function() {
-      try{
-        const token = window.localStorage.getItem('token');
-        const formattedToken = `Bearer ${token}`;
-        api.get('/authorization', {
-          headers: {
-            Authorization: formattedToken
-          }
-        })
-        .then((response) => {
-          if(response.data.sucess){
-            this.authorization = true;
-          } else{
-            this.authorization = false;
-            this.redirect();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-      } catch(err){
-          this.authorization = false;
-      }
+    getAuthorization: async function(){
+      const token = localStorage.getItem('token');
+      await authenticate(token);
+      this.redirect();
     },
     redirect: function(){
-      if(!this.authorization){
+      if(!this.$store.state.isAuthenticated){
         this.$router.push('/login');
       }
     },

@@ -8,11 +8,10 @@ const store = new Vuex.Store({
     isAuthenticated: false
   },
   mutations: {
-    authenticate (state) {
-      state.isAuthenticated = !state.isAuthenticated;
+    authenticate (state, auth) {
+      state.isAuthenticated = auth;
     }
   }
 })
-
 
 export default store;

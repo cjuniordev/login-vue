@@ -38,19 +38,18 @@ import login from '@/services/login';
 
 export default {
 name: 'FormLogin',
-data: {
+data: function(){
   return{
     username: '',
     password: ''
   }
-}
+},
 methods: {
     handleLogin: async function() {
         const response = await login(this.username, this.password);
         if(response.sucess){
           window.localStorage.setItem('token', response.token);
-          this.$store.commit('authenticate');
-          this.$router.push('/');
+          this.$router.replace('/');
         }
     }
 }
