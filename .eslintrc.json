@@ -6,8 +6,7 @@
     "extends": [
         "plugin:vue/essential",
         "airbnb-base",
-        "prettier",
-        "prettier/react"
+        "prettier"
     ],
     "parser": "babel-eslint",
     "parserOptions": {
