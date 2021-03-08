@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import api from '@/services/api';
 import authenticate from '@/services/authenticate';
+import getUsers from '@/services/getUsers';
 import Table from '@/components/Table';
 
 export default {
@@ -27,7 +27,6 @@ export default {
   data: function(){
     return{
       users: null,
-      data: null,
     }
   },
   components: {
@@ -44,26 +43,8 @@ export default {
         this.$router.push('/login');
       }
     },
-    getUsers: function(){
-      api.get('/users')
-        .then((response) => {
-          const { data } = response;
-          this.data = data;
-        })
-    },
-    handleUsers: function(){
-      this.getAuthorization();
-      this.getUsers();
-      let arrUsers = [];
-      this.data.forEach((item, i) => {
-        let user = new Object();
-        user.id = item.id;
-        user.username = item.username;
-        user.email = item.email;
-        arrUsers.push(user);
-      });
-      console.log(arrUsers);
-      this.users = arrUsers;
+    handleUsers: async function(){
+      this.users = await getUsers();
     }
   },
   async beforeMount(){
