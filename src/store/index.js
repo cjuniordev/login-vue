@@ -5,11 +5,11 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    count: 0
+    isAuthenticated: false
   },
   mutations: {
-    increment (state) {
-      state.count++
+    authenticate (state) {
+      state.isAuthenticated = !state.isAuthenticated;
     }
   }
 })

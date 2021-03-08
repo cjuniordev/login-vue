@@ -10,7 +10,7 @@
     </div>
     <md-field class="input">
         <label>Digite seu usuário</label>
-        <md-input v-model="initial"></md-input>
+        <md-input v-model="username"></md-input>
     </md-field>
     <md-field class="input">
         <label>Digite sua senha</label>
@@ -19,7 +19,7 @@
     <md-button
         class="md-raised button"
         type="button"
-        v-on:click="handleLogin(initial, password)"
+        v-on:click="handleLogin"
     >
     Entrar
     </md-button>
@@ -38,12 +38,19 @@ import login from '@/services/login';
 
 export default {
 name: 'FormLogin',
+data: {
+  return{
+    username: '',
+    password: ''
+  }
+}
 methods: {
-    handleLogin: async function(name, pwd) {
-        const response = await login(name, pwd);
+    handleLogin: async function() {
+        const response = await login(this.username, this.password);
         if(response.sucess){
-            window.localStorage.setItem('token', response.token);
-            this.$router.push('/');
+          window.localStorage.setItem('token', response.token);
+          this.$store.commit('authenticate');
+          this.$router.push('/');
         }
     }
 }
