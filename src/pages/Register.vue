@@ -1,31 +1,38 @@
 <template>
   <div id="register">
-    <h1>Registrar</h1>
-    <form class="md-layout">
-      <div class="md-layout md-gutter">
-        <div class="md-layout-item md-small-size-100">
-          <md-field>
-            <label for="name">Nome</label>
-            <md-input name="name" id="name" v-model="user.username"/>
-            </md-field>
-          <md-field>
-            <label for="email">E-mail</label>
-            <md-input type="email" name="email" id="email" v-model="user.email"/>
-          </md-field>
-          <md-field>
-            <label for="password">Senha</label>
-            <md-input type="password" name="password" id="password"  v-model="user.password"/>
-          </md-field>
-          <md-field>
-            <label for="conf_password">Cofirmar senha</label>
-              <md-input type="password" name="conf_password" id="conf_password" v-model="user.password2"/>
-            </md-field>
-          <md-button type="button" class="md-primary" :disabled="sending" @click="handleRegister">Registrar</md-button>
-        </div>
+    <form>
+      <h1 class="title">
+          Registre-se
+      </h1>
+      <md-field class="input">
+          <label>Digite seu usuário</label>
+          <md-input v-model="user.name"></md-input>
+      </md-field>
+      <md-field class="input">
+          <label>Digite seu email</label>
+          <md-input v-model="user.email" type="email"></md-input>
+      </md-field>
+      <md-field class="input">
+          <label>Digite sua senha</label>
+          <md-input v-model="user.password" type="password"></md-input>
+      </md-field>
+      <md-field class="input">
+          <label>Confirme sua senha</label>
+          <md-input v-model="user.conf_password" type="password"></md-input>
+      </md-field>
+      <md-button
+          class="md-raised button"
+          type="button"
+          v-on:click="handleLogin"
+      >
+      Cadastrar
+      </md-button>
+      <div class="links">
+          <p>
+              Possui uma conta?
+              <router-link to="/login" class="bold">Entre</router-link>
+          </p>
       </div>
-      <md-snackbar :md-position="position" :md-duration="isInfinity ? Infinity : duration" :md-active.sync="showSnackbar" md-persistent>
-        <span>Connection timeout. Showing limited messages!</span>
-      </md-snackbar>
     </form>
   </div>
 </template>
@@ -38,15 +45,11 @@ export default {
   data: function(){
     return{
       user: {
-        username: null,
+        name: null,
         email: null,
         password: null,
-        password2: null
+        conf_password: null
       },
-      showSnackbar: false,
-      position: 'center',
-      duration: 4000,
-      isInfinity: false
     }
   },
   methods: {
@@ -69,15 +72,55 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
   background-color: #FAFAFA;
 }
+
 form{
-  width: 30%;
-  padding: 0 30px;
-  background-color: #FFFFFF;
+    height: 60vh;
+    width: 50vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px;
+    border-radius: 10px;
+
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, .2);
 }
-.md-primary{
-  background-color: #40c057;
+
+.input{
+    width: 90%;
+
+    margin-bottom: 0;
 }
+
+.button{
+    width: 100%;
+
+    border-radius: 20px !important;
+
+    margin-top: 30px;
+
+    background: rgb(103,196,249);
+    background: linear-gradient(90deg, rgba(103,196,249,1) 25%, rgba(163,60,240,1) 75%);
+}
+
+.links{
+    width: 100%;
+    padding-top: 20px;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+p{
+    margin: 0;
+}
+
 </style>
