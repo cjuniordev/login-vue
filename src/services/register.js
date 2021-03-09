@@ -8,7 +8,10 @@ async function register({ username, password, password2, email }){
     return response.data;
 
   } catch(err){
+    const response = JSON.parse('{ "sucess": "false" }');
     console.log(err);
+
+    return response;
   }
 }
 

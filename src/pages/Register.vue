@@ -55,8 +55,9 @@ export default {
   methods: {
     handleRegister: async function(){
        const response = await register(this.user);
-       if(response.sucess){
-         // create modal with response
+       if(response.sucess == true){
+         this.$router.replace('/login');
+       } else{
        }
     }
   }
