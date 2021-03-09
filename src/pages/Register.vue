@@ -6,7 +6,7 @@
       </h1>
       <md-field class="input">
           <label>Digite seu usuário</label>
-          <md-input v-model="user.name"></md-input>
+          <md-input v-model="user.username"></md-input>
       </md-field>
       <md-field class="input">
           <label>Digite seu email</label>
@@ -18,12 +18,12 @@
       </md-field>
       <md-field class="input">
           <label>Confirme sua senha</label>
-          <md-input v-model="user.conf_password" type="password"></md-input>
+          <md-input v-model="user.password2" type="password"></md-input>
       </md-field>
       <md-button
           class="md-raised button"
           type="button"
-          v-on:click="handleLogin"
+          @click="handleRegister"
       >
       Cadastrar
       </md-button>
@@ -45,20 +45,19 @@ export default {
   data: function(){
     return{
       user: {
-        name: null,
-        email: null,
+        username: null,
         password: null,
-        conf_password: null
+        password2: null,
+        email: null
       },
     }
   },
   methods: {
     handleRegister: async function(){
-       const res = await register(this.user);
-       if(res.sucess){
-         console.log('user registered')
+       const response = await register(this.user);
+       if(response.sucess){
+         // create modal with response
        }
-       this.showSnackbar= true;
     }
   }
 }
