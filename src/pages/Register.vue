@@ -4,21 +4,21 @@
       <h1 class="title">
           Registre-se
       </h1>
-      <md-field class="input">
+      <md-field class="input" :class="messageClass">
           <label>Digite seu usuário</label>
-          <md-input v-model="user.username"></md-input>
+          <md-input v-model="user.username" required></md-input>
       </md-field>
-      <md-field class="input">
+      <md-field class="input" :class="messageClass">
           <label>Digite seu email</label>
-          <md-input v-model="user.email" type="email"></md-input>
+          <md-input v-model="user.email" type="email" required></md-input>
       </md-field>
-      <md-field class="input">
+      <md-field class="input" :class="messageClass">
           <label>Digite sua senha</label>
-          <md-input v-model="user.password" type="password"></md-input>
+          <md-input v-model="user.password" type="password" required></md-input>
       </md-field>
-      <md-field class="input">
+      <md-field class="input" :class="messageClass">
           <label>Confirme sua senha</label>
-          <md-input v-model="user.password2" type="password"></md-input>
+          <md-input v-model="user.password2" type="password" required></md-input>
       </md-field>
       <md-button
           class="md-raised button"
@@ -34,6 +34,10 @@
           </p>
       </div>
     </form>
+    <md-snackbar :md-position="center" :md-duration="4000" :md-active.sync="showSnackbar" md-persistent>
+      <span>Não foi possível registrar usuário!</span>
+      <md-button class="md-primary" @click="showSnackbar = false">OK</md-button>
+    </md-snackbar>
   </div>
 </template>
 
@@ -50,15 +54,36 @@ export default {
         password2: null,
         email: null
       },
+      showSnackbar: false,
+    }
+  },
+  computed: {
+    messageClass () {
+      return {
+        'md-invalid': true
+      }
     }
   },
   methods: {
     handleRegister: async function(){
-       const response = await register(this.user);
-       if(response.sucess == true){
-         this.$router.replace('/login');
-       } else{
-       }
+      if(!this.isNull(this.user)){
+        const response = await register(this.user);
+        if(response.sucess == true){
+          this.$router.replace('/login');
+        } else{
+          this.showSnackbar = true;
+        }
+      } else{
+        this.showSnackbar = true;
+      }
+    },
+    isNull: function(obj){
+      if(obj.username && obj.password && obj.password2 && obj.email){
+        console.log('nao nulos')
+        return false;
+      } else{
+        return true;
+      }
     }
   }
 }
