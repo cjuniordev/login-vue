@@ -34,9 +34,12 @@
           </p>
       </div>
     </form>
-    <md-snackbar :md-position="center" :md-duration="4000" :md-active.sync="showSnackbar" md-persistent>
-      <span>Não foi possível registrar usuário!</span>
-      <md-button class="md-primary" @click="showSnackbar = false">OK</md-button>
+    <md-snackbar class="snackbar" :md-position="center" :md-duration="4000" :md-active.sync="showSnackbar" md-persistent>
+      <span class="bold">
+        <font-awesome-icon icon="exclamation-circle" />
+        Não foi possível registrar usuário!
+      </span>
+      <md-button class="md-primary bold" @click="showSnackbar = false">OK</md-button>
     </md-snackbar>
   </div>
 </template>
@@ -146,6 +149,15 @@ form{
 
 p{
     margin: 0;
+}
+
+.snackbar{
+  background-color: #FF6155;
+  color: #FFFF;
+}
+
+.md-primary{
+  color: #FFFF;
 }
 
 </style>
